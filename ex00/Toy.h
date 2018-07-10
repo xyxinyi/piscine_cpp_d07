@@ -1,52 +1,32 @@
-#ifndef TOY_H_
-#define TOY_H_
+#ifndef _TOY_H_
+#define _TOY_H_
 
-#include <ostream>
 #include <string>
 #include "Picture.h"
-class Toy{
- public:
-  enum ToyType{ BASIC_TOY, ALIEN, BUZZ, WOODY };
- protected:
-  Picture _picture;
-  ToyType _type;
-  std::string _name;
-  std::string e;
- public:
 
-  Toy();
-  Toy(const Toy &);
-  Toy(ToyType type, const std::string &name, const std::string &file);
-  virtual ~Toy(){};
-  //get
-  ToyType getType() const;
-  std::string getName() const;
-  std::string getAscii() const;
-  //set
-  void setData(std::string a);
-  bool setAscii(const std::string &fn);
-  void setName(const std::string &fn);
+class Toy {
+public:
 
-  virtual void speak(const std::string &s);
-  virtual bool speak_es(const std::string &s);
+    enum ToyType {
+        BASIC_TOY,
+        ALIEN
+    };
 
-  Toy	operator=(const Toy &s);
-    
-  class Error{
-  public:
-    Error(){};
-    ~Error(){};
-    typedef enum { UNKNOWN, PICTURE, SPEAK } ErrorType;
-    ErrorType type;
-    std::string _what;
-    std::string _where;
-    std::string where(){ return _where; }
-    std::string what(){ return _what; }
-  };
-  Toy::Error getLastError();
+	~Toy();
+    Toy() : _type(BASIC_TOY), _name(std::string("toy")) {};
+    Toy(ToyType const &type, std::string const &name, std::string const &fileName)
+            : _type(type), _name(std::string(name)), _picture(fileName) {};
+
+    bool setAscii(std::string const &name);
+    std::string const &getAscii() const;
+    std::string const &getName() const;
+    void setName(std::string const &name);
+    ToyType const &getType() const;
+private:
+    ToyType const _type;
+    std::string _name;
+    Picture _picture;
 };
 
-std::ostream &operator<<(std::ostream &f, const Toy &a);
-void operator<<(Toy &a, const std::string &str);
 
-#endif /* Watson **/
+#endif 
