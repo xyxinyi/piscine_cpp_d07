@@ -1,18 +1,17 @@
-#ifndef BUZZ_H_
-#define BUZZ_H_
-#include <string>
-# include "Toy.h"
+#ifndef _BUZZ_H_
+#define _BUZZ_H_
 
-class Buzz : public Toy{
-public:
- Buzz(const std::string &n, const std::string &fn = "buzz.txt");
- ~Buzz(){}
- void speak(const std::string &s){
-   std::cout << "BUZZ: " << _name << " \"" <<  s << "\"" << std::endl;;
-  } 
- virtual bool speak_es(const std::string &s){
-   std::cout << "BUZZ: " << _name << "senorita \"" <<  s << "\" senorita" << std::endl;
-   return true;
- };
+#include <string>
+#include <cctype>
+#include "Toy.h"
+
+class Buzz : public Toy
+{
+	public:
+		Buzz(std::string const &name);
+		Buzz(std::string const &name, std::string const &filename);
+		~Buzz();
+		void speak(std::string);
 };
-#endif 
+
+#endif

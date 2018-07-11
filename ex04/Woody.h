@@ -1,21 +1,17 @@
-#ifndef WOODY_H_
-#define WOODY_H_
+#ifndef _WOODY_H_
+#define _WOODY_H_
+
+#include <string>
+#include <cctype>
 #include "Toy.h"
 
-class Woody : public Toy{
-public:
-  Woody(const std::string &n, const std::string &fn = "woody.txt");
-  ~Woody(){}
-  virtual void speak(const std::string &s){
-    std::cout << "WOODY: " << _name << " \"" <<  s << "\"" << std::endl;
-  }
-  virtual bool speak_es(const std::string &s){
-    e = "wrong mode";
-
-    return false;
-    (void) s;
-    std::cout << "WOODY: " << _name << " \"" <<  s << "\"" << std::endl;
-  }
+class Woody : public Toy
+{
+	public:
+		Woody(std::string const &name);
+		Woody(std::string const &name, std::string const &filename);
+		~Woody();
+		void speak(std::string);
 };
 
 #endif

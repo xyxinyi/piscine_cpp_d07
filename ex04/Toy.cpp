@@ -1,88 +1,78 @@
-#include "string.h"
 #include "Toy.h"
 
-
-Toy::Toy(){
-
-}
-Toy::Toy(Toy::ToyType type, const std::string &name, const std::string &file){
-  //  if (type == BASIC_TOY|| type == ALIEN)
-  _type = type;
-  _name = name;
-  _picture = Picture(file);
-}
-//get
-Toy::ToyType Toy::getType() const {
-  return _type;
-}
-std::string Toy::getName() const {
-  return _name;
-}
-std::string Toy::getAscii() const {
-  return _picture.getData();
-}
-//set
-bool Toy::setAscii(const std::string &file){
-  if (_picture.getPictureFromFile(file)){
-    return true;
-  }
-  e = "bad new illustration";
-  return false; 
-}
-void Toy::setName(const std::string &name){
-  _name = name;
+Toy::Toy() : type(BASIC_TOY), _name("toy")
+{
 }
 
-Toy	Toy::operator=(const Toy &a){
-  this->_picture = a._picture;
-  this->_type = a._type;
-  this->_name = a._name;
-  return (*this);
+Toy::Toy(ToyType ToyType, std::string const &name, std::string const &file)
+	: type(ToyType), _name(name), _picture(file)
+{
 }
 
-Toy::Toy(const Toy &a){
-  this->_picture = a._picture;
-  this->_type = a._type;
-  this->_name = a._name;
+Toy::Toy(const Toy &copy) : type(copy.type), _name(copy._name), _picture(copy._picture)
+{
 }
 
-std::ostream &operator<<(std::ostream &f, const Toy &a){
-  f << a.getName() << std::endl << a.getAscii() << std::endl;
-  return f;
+Toy &Toy::operator=(const Toy &copy)
+{
+	if (this != &copy) 
+	{
+		this->type = copy.type;
+		this->_name = copy._name;
+		this->_picture = copy._picture;
+	}
+	return (*this);
 }
 
-void operator<<(Toy &a, const std::string &str){
-  a.setData(str);
+Toy::~Toy()
+{
 }
 
-Toy::Error Toy::getLastError(){
-  Toy::Error s;
-
-  s._what = e;
-  if (e == "bad new illustration"){
-    s._where = "setAscii";
-    s.type = Toy::Error::PICTURE;
-  }
-  else if (e == "wrong mode"){
-    s._where = "speak_es";
-    s.type = Toy::Error::SPEAK;
-  }
-  else{
-    s._where = "speak_es";
-    s.type = Toy::Error::UNKNOWN;
-  }
-  return s;
+int	Toy::getType() const
+{
+	return (type);
 }
 
-void Toy::speak(const std::string &s){
-  std::cout << _name << " \"" <<  s << "\"" << std::endl;
+std::string	Toy::getName() const
+{
+	return (_name);
 }
 
-bool Toy::speak_es(const std::string &s){
-  (void) s;
-  return true;
+void	Toy::setName(std::string name)
+{
+	_name = name;
 }
 
-void Toy::setData(std::string a){
-  _picture.setData(a);
-};
+bool	Toy::setAscii(std::string fileName)
+{
+	Picture Picture(fileName);
+
+	if (Picture.getData() == "")
+		return (false);
+	else 
+	{
+		_picture = Picture;
+		return (true);
+	}
+}
+
+std::string	Toy::getAscii() const
+{
+	return (this->_picture.getData());
+}
+
+void	Toy::speak(std::string string)
+{
+	std::cout << _name << " \""<< string << "\"\n";
+}
+
+std::ostream &operator<<(std::ostream &s, const Toy &toy)
+{
+	return (s << toy.getName() << '\n' << toy.getAscii() << '\n');
+}
+
+Toy &Toy::operator<<(std::string const &put)
+{
+	_picture.data = put;
+	return (*this);
+}
